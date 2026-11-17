@@ -4,6 +4,7 @@
 - [BANKCB](bankcb.md)
 - [Tone index](toneidx.md)
 - [SDK config](sdkcfg.md)
+- [WTS tone files](wts.md)
 
 ## Firmware formats
 

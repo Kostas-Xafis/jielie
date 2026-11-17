@@ -157,3 +157,55 @@ the CRC16 prepended to them, and the BLE device name being now 32 bytes long.
 
 ```
 
+## JL701N SDK (config tool)
+
+- file: cfg_tool.bin
+
+Not a fixed structure anymore, but a list of items, each with an ID that matches the `CFG_xxx` IDs
+from the SDK's `syscfg_id.h` (the same IDs that are passed to `syscfg_read()`).
+
+Can be read and written on a running device with the [config tool protocol](../protos/cfgtool.md).
+
+```
+4: Size of the rest of the file
+
+then the items, until the end of the file:
+  1: Low byte of the CRC16 of the item data
+  3: (little-endian)
+      bit0-11  = Item ID
+      bit12-23 = Item data length
+  N: Item data
+```
+
+Items seen in a JL701N based speaker (890 byte file):
+
+|  ID  | Size | SDK name                | Contents                                           |
+|------|------|-------------------------|----------------------------------------------------|
+| 101  | 660  | CFG_BT_NAME             | 20 entries of: 1 byte flag (01 on the first entry, 00 on the rest), 32 bytes name |
+| 102  | 6    | CFG_BT_MAC_ADDR         | All FF                                             |
+| 103  | 32   | CFG_BLE_NAME            | Name                                               |
+| 104  | 6    | CFG_BLE_MAC_ADDR        | All FF                                             |
+| 524  | 4    | CFG_AUDIO_ID            | `AUDIO_CONFIG`, see below                          |
+| 537  | 3    | CFG_MIC_TYPE_ID         |                                                    |
+| 538  | 4    | CFG_COMBINE_SYS_VOL_ID  |                                                    |
+| 539  | 4    | CFG_COMBINE_CALL_VOL_ID |                                                    |
+| 601  | 1    | CFG_BT_RF_POWER_ID      |                                                    |
+| 602  | 2    | CFG_TWS_PAIR_CODE_ID    | FF FF                                              |
+| 603  | 1    | CFG_AUTO_OFF_TIME_ID    |                                                    |
+| 604  | 72   | CFG_AEC_ID              | A few bytes, then floats                           |
+| 607  | 9    | CFG_LRC_ID              |                                                    |
+| 615  | 1    | CFG_BLE_RF_POWER_ID     |                                                    |
+| 1022 | 3    | ?                       | FF 3F 07                                           |
+| 1023 | 14   | ?                       | Version string of the config: `soundbox-1.1.0`     |
+
+`AUDIO_CONFIG` (item 524):
+
+```
+1: Enable
+1: Max system volume (31)
+1: Default volume (25)
+1: Tone volume (25)
+```
+
+Note that the firmware does not have to honor these: on that speaker changing the tone volume
+(with the item CRC and the file's data CRC fixed up) made no audible difference.

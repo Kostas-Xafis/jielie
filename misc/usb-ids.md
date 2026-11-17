@@ -9,6 +9,7 @@
 | 4C4A | 3042 | BR30 UBOOT 1.00                        |
 | 4C4A | 3442 | BR34 UBOOT 1.00                        |
 | 4C4A | 4155 | BR25 app / UAC Demo v1.0               |
+| 4C4A | 4A55 | BR28 (JL701N) app, CDC ACM            |
 | E2B5 | 6911 | BR17/BR21 UBOOT 1.00                   |
 | E2B7 | 0811 | CD002 (AC109N) app                     |
 | E2B7 | 0812 | CD005 (AC1187) app                     |

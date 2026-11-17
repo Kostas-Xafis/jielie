@@ -10,6 +10,7 @@
 
 ## USB
 
+- [Config tool protocol](cfgtool.md) (USB CDC, also UART) ~ reading/patching config files and flash on a running device
 - UBOOT (USB update)
   - [see this](https://github.com/kagaimiq/jl-uboot-tool/blob/main/docs/usb-protocol.md)
 
